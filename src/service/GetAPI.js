@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 
-const GetAPI = async (url) => {
+const useFetch = (url) => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState(null);
@@ -13,7 +13,6 @@ const GetAPI = async (url) => {
 
       const result = await fetch(url);
       const json = await result.json();
-      console.log(json);
       setData(json);
     } catch (err) {
       setErrors(err.toString());
@@ -22,15 +21,15 @@ const GetAPI = async (url) => {
     }
   };
 
-  // const ref = useRef(null);
-  // ref.current = () => {
-  //   loadData();
-  // };
-  // useEffect(() => {
-  //   ref.current();
-  // }, []);
+  const ref = useRef(null);
+  ref.current = () => {
+    loadData();
+  };
+  useEffect(() => {
+    ref.current();
+  }, []);
 
   return [data, loading, errors];
 };
 
-export default GetAPI;
+export default useFetch;
